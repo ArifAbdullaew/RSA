@@ -1,4 +1,3 @@
-# coding: cp1251
 import math
 from ascii_codes import ascii_dict
 
