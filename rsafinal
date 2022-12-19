@@ -1,0 +1,139 @@
+import math
+from ascii_codes import ascii_dict
+from random import choice
+
+#e = int(input("Your exponent\n"))
+p = int(input("Simple number\n"))
+q = int(input("Simple number\n"))
+opentext = input("Your Opentext\n")
+binr = list(opentext)
+
+
+# print(list(opentext))
+
+def found_exp():
+    global f
+    all_exps = []
+    for e in range(2, f):
+        if math.gcd(f, e) == 1:
+            all_exps.append(e)
+            print(all_exps)
+    return choice(all_exps)
+
+#Р°Р»РіРѕСЂРёС‚Рј РµРІРєР»РёРґР°
+def evklidv(a, b):
+    global f
+    i = 1
+    y2 = 0
+    y1 = 1
+    while (a != 0) & (b != 0):
+        q = a // b
+        r = a % b
+        y = y2 - (q * y1)
+        a = b
+        b = r
+        y2 = y1
+        y1 = y
+        i += 1
+    if y2 < 0:
+        y2 += f
+    return y2, i
+
+# РјР°С‚РµРјР°С‚РёС‡РµСЃРєРёРµ РѕРїРµСЂР°С†РёРё
+n = p * q
+f = (p - 1) * (q - 1)
+e = found_exp()
+print('Your e\n', e)
+d, m = evklidv(f, e)
+print("d\n", d)
+
+# РїРµСЂРµРІРѕРґ РІ РґРІРѕРёС‡РЅС‹Р№ РєРѕРґ
+bits = []
+for letter in list(opentext):
+    bits.append(ascii_dict[letter])
+    print(''.join(bits))
+binarystring = ''.join(bits)
+
+# arr = []
+# for i in binr:
+#     s = ""
+#     arr.append(bin(ord(i))[2:])
+#     print(arr)
+# binarystring = ''.join(arr)
+# print(''.join(arr))
+
+#СЃС‡РёС‚Р°РµРј РґР»РёРЅСѓ Р±Р»РѕРєР°
+lenblock = math.floor(math.log(n, 2))
+
+# if len(binarystring) % lenblock != 0:
+# binarystringfull = binarystring.zfill('', (len(binarystring) - len(binarystring) % lenblock))
+
+#РїРѕРґРіРѕРЅСЏРµРј РїРѕРґ СЂР°Р·РјРµСЂ РєСЂР°С‚РЅРѕРµ РґР»РёРЅРµ Р±Р»РѕРєР°
+i = 0
+while len(binarystring) % lenblock != 0:
+    binarystring = binarystring.zfill(i)
+    i += 1
+print(binarystring)
+
+# blocks = binarystring.zfill((len(binarystring) - len(binarystring) % lenblock) + len(binarystring))
+
+#Р Р°Р·Р±РёРІР°РµРј РЅР° Р±Р»РѕРєРё
+ssplit = list(map(''.join, zip(*[iter(binarystring)] * lenblock)))
+print(ssplit)
+
+# print(d, m)
+# if math.gcd(f, q) != 1:
+#   print("Error: exponent value is not coprime to euler function")
+
+# print(evklidv(21280, 13))
+#РїРµСЂРµРІРѕРґРёРј РІ РґРµСЃСЏС‚РёС‡РЅСѓСЋ РЎРЎ
+ssplit = [int(block, 2) for block in ssplit]
+print(ssplit)
+
+#СЃС‡РёС‚Р°РµРј Рњ Рё РїРµСЂРµРІРѕРґРёРј РІ РґРІРѕРёС‡РЅСѓСЋ РЎРЎ
+ssplit = [bin((num**e) % n)[2:].zfill(lenblock+1) for num in ssplit]
+print(ssplit)
+
+# bits = []
+# for letter in list(opentext):
+#     bits.append(ascii_dict[letter])
+#     print(''.join(bits))
+# binarystring = ''.join(bits)
+
+
+# arr_encode = []
+# for numbes in ssplit:
+#     arr_encode.append(ssplit[numbes])
+#     print(arr_encode)
+# binarystring = ''.join(arr_encode)
+# print(''.join(arr_encode))
+
+#Р Р°Р·Р±РёРІР°РµРј РЅР° 8 Р±Р»РѕРєРѕРІ
+ssplit = ''.join(ssplit)
+print(ssplit)
+k = 0
+while len(ssplit) % 8 != 0:
+    ssplit = ssplit.zfill(k)
+    k += 1
+print(ssplit)
+
+encodenum = list(map(''.join, zip(*[iter(ssplit)] * 8)))
+print(encodenum)
+
+#РїРµСЂРµРѕРїСЂРµРґРµР»СЏРµРј Р·РЅР°С‡РµРЅРёСЏ
+print([list(ascii_dict.keys())[list(ascii_dict.values()).index(i)] for i in encodenum])
+encode_text = ''.join([list(ascii_dict.keys())[list(ascii_dict.values()).index(i)] for i in encodenum])
+print(encode_text)
+# array_encodetext = []
+# for symbol in list(encodenum):
+#     array_encodetext.append(ascii_dict[symbol])
+#     print(''.join(array_encodetext))
+# encodetext = ''.join(array_encodetext)
+# print(encodetext)
+
+# lenblockencode = lenblock + 1
+# arrencode = []
+# for i in len(ssplit):
+#     arrencode.append(ssplit)
+#     print(''.join(arrencode))
+
